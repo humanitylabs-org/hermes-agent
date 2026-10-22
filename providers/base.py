@@ -108,6 +108,10 @@ class ProviderProfile:
     # resolve_external_process_provider_credentials() reads them instead of
     # hardcoding one vendor's binary. Env vars are checked in order and win
     # over the static defaults, so an operator can point at a custom build.
+    # External-process/ACP clients default to non-streaming. Opt in only when
+    # stream=True returns a stream iterator (including text/tool-call deltas),
+    # not a final response object. Ordinary HTTP providers are unaffected.
+    supports_streaming: bool = False
     process_command: str = ""            # default binary, e.g. "copilot"
     process_args: tuple = ()             # default argv tail, e.g. ("--acp", "--stdio")
     process_command_env_vars: tuple = ()  # env overrides for the binary, in priority order
